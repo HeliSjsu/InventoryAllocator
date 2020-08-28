@@ -28,7 +28,6 @@ public class InventoryAllocator {
 		inventoryInput = sc.nextLine();	
 		
 		Map<String,Integer> order = generateOrder(orderInput); 
-		System.out.println(order);
 		List<Map<String,Integer>> inventory = new ArrayList<>();
 		List<String> names = new ArrayList<>();
 		
@@ -49,45 +48,7 @@ public class InventoryAllocator {
 		
 	
 	}
-
-	/*
-	 *	Check if all orders can be shipped from same store. 
-	 */
-	protected static Map<String, Map<String, Integer>> checkIndividualStore(Map<String, Integer> order,
-			List<Map<String, Integer>> inventory, List<String> names) {
-		Map<String,Map<String,Integer>> finalans = new HashMap<>();
-		try {
-			for(int i=0; i<inventory.size(); i++) {
-				Map<String,Integer> inventories = inventory.get(i);
-				
-				if(inventories.size() >= order.size()) {	
-				 boolean flag =order.entrySet().stream().allMatch(e -> e.getValue() <= inventories.get(e.getKey()));
-				
-				 if(flag) {
-					 for(String key : order.keySet()) {
-						 int val = inventories.get(key) - order.get(key);
-						 if(val == 0) {
-							 inventories.remove(key);
-							 continue;
-						 }
-						 inventories.put(key, val);
-					 }
-					 finalans.put(names.get(i), order);
-					 break;
-				 }
-				}
-			}
-		}catch(NullPointerException nullPointerExc) {
-			System.out.println("Null value found");
-			nullPointerExc.printStackTrace();
-		}catch(Exception e) {
-			System.out.println("Exception occured");
-			e.printStackTrace();
-		}
-		System.out.println("Single store" + finalans);
-		return finalans;
-	}
-
+	
 	/*
 	 * Populate value in List inventory & names 
 	 */
@@ -167,12 +128,48 @@ public class InventoryAllocator {
 			System.out.println("Error occured while writing data into file");
 			e.printStackTrace();
 		} 
-	       
-	        
-		 System.out.println(ja.toJSONString());
+	       	        
 		 return ja;
 	}
 
+	/*
+	 *	Check if all orders can be shipped from same store. 
+	 */
+	protected static Map<String, Map<String, Integer>> checkIndividualStore(Map<String, Integer> order,
+			List<Map<String, Integer>> inventory, List<String> names) {
+		Map<String,Map<String,Integer>> finalans = new HashMap<>();
+		try {
+			for(int i=0; i<inventory.size(); i++) {
+				Map<String,Integer> inventories = inventory.get(i);
+				
+				if(inventories.size() >= order.size()) {	
+				 boolean flag =order.entrySet().stream().allMatch(e -> e.getValue() <= inventories.get(e.getKey()));
+				
+				 if(flag) {
+					 for(String key : order.keySet()) {
+						 int val = inventories.get(key) - order.get(key);
+						 if(val == 0) {
+							 inventories.remove(key);
+							 continue;
+						 }
+						 inventories.put(key, val);
+					 }
+					 finalans.put(names.get(i), order);
+					 break;
+				 }
+				}
+			}
+		}catch(NullPointerException nullPointerExc) {
+			System.out.println("Null value found");
+			nullPointerExc.printStackTrace();
+		}catch(Exception e) {
+			System.out.println("Exception occured");
+			e.printStackTrace();
+		}
+		return finalans;
+	}
+
+	
 	/*
 	 * Allocate Inventory to produce the cheapest shipment. 
 	 */
@@ -190,7 +187,6 @@ public class InventoryAllocator {
 				while (iter.hasNext()) {
 				    Map.Entry<String,Integer> order = iter.next();
 				    String item = order.getKey();
-				//	System.out.println("order item "+item);
 					if(inventories.containsKey(item)) {
 						int quantity = order.getValue();
 						int available = inventories.get(item);
@@ -202,7 +198,7 @@ public class InventoryAllocator {
 						}else {
 							orders.put(item, quantity - available);
 							inventories.remove(item);
-							 ans.put(item, available);
+							ans.put(item, available);
 						}
 					}
 				}
