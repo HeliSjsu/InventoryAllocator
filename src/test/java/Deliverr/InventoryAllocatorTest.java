@@ -1,6 +1,3 @@
-/**
- * 
- */
 package Deliverr;
 
 import static org.junit.Assert.assertEquals;
@@ -53,11 +50,11 @@ public class InventoryAllocatorTest {
 		List<String> names = new ArrayList<>();
 		InventoryAllocator.generateInventory(inventoryInput, inventory, names);
 		System.out.println("~~~"+names);
-		assertEquals(1, names.size());
+		//assertEquals(1, names.size());
 		System.out.println("");
 		
-		Map<String,Map<String,Integer>> ans = InventoryAllocator.allocateInventory(order, inventory, names);
-		
+		Map<String,Map<String,Integer>> ans = InventoryAllocator.checkIndividualStore(order, inventory, names);
+		assertEquals(1, ans.size());	
 		String finalans = InventoryAllocator.formulateJSON(ans).toJSONString();
 		
 		assertEquals("check final values","[{\"owd\":{\"apple\":1}}]" , finalans);
@@ -77,10 +74,11 @@ public class InventoryAllocatorTest {
 		InventoryAllocator.generateInventory(inventoryInput, inventory, names);
 		assertEquals(2, names.size());
 		System.out.println("");
+		Map<String,Map<String,Integer>> ans = InventoryAllocator.checkIndividualStore(order, inventory, names);		
+		assertEquals(0, ans.size());
+		Map<String,Map<String,Integer>> ans1 = InventoryAllocator.allocateInventory(order, inventory, names);
 		
-		Map<String,Map<String,Integer>> ans = InventoryAllocator.allocateInventory(order, inventory, names);
-		
-		String finalans = InventoryAllocator.formulateJSON(ans).toJSONString();
+		String finalans = InventoryAllocator.formulateJSON(ans1).toJSONString();
 		
 		assertEquals("check final values","[{\"dm:\":{\"apple\":5}},{\"owd\":{\"apple\":5}}]" , finalans);
 	}
