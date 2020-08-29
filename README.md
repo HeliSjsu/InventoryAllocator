@@ -4,7 +4,7 @@ Inventory Allocator computes the best way an order can be shipped (called shipme
 
 It produces the cheapest shipment and writes result into file called **ShipmentPath.json**.
 
-# Pre - Requirement
+# Requirement
 Java 8 or above.
 
 You can install java from oracle website : [https://www.oracle.com/java/technologies/javase-downloads.html](https://www.oracle.com/java/technologies/javase-downloads.html)
@@ -31,3 +31,8 @@ You can install java from oracle website : [https://www.oracle.com/java/technolo
  - If order items are not present in all warehouses empty list is returned.
  - If there is error in input format or no order at all empty list is returned as output.
  - Unit test cases are written in file called **InventoryAllocatorTest** which is located at [https://github.com/HeliSjsu/InventoryAllocator/blob/master/src/test/java/Deliverr/InventoryAllocatorTest.java](https://github.com/HeliSjsu/InventoryAllocator/blob/master/src/test/java/Deliverr/InventoryAllocatorTest.java).
+ 
+ ## Demo
+ 
+ I have uploaded video of working code on : 
+ https://www.youtube.com/watch?v=yyTG8eD742M
