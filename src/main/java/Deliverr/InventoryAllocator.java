@@ -120,7 +120,7 @@ public class InventoryAllocator {
 		 
 		 PrintWriter pw;
 		try {
-			pw = new PrintWriter("JSONExample.json");
+			pw = new PrintWriter("ShipmentPath.json");
 			pw.write(ja.toJSONString()); 
 		    pw.flush(); 
 		    pw.close(); 
